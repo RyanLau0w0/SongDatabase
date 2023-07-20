@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     EditText etTitle;
     EditText etSinger;
     EditText etYear;
-    RadioGroup rgStars;
     Button btnInsert;
     Button btnShowList;
     RadioButton Star1;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         etTitle = findViewById(R.id.etTitle);
         etSinger = findViewById(R.id.etSinger);
         etYear = findViewById(R.id.etYear);
-        rgStars = findViewById(R.id.rgStars);
         btnInsert = findViewById(R.id.btnInsert);
         btnShowList = findViewById(R.id.btnShowList);
         Star1 = findViewById(R.id.Star1);
@@ -52,16 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 String YearS= etYear.getText().toString();
                 int Year = Integer.parseInt(YearS);
                 String Star = "";
-                if (Star1.isChecked() && !Star2.isChecked() && !Star3.isChecked() && !Star4.isChecked() && !Star5.isChecked()){
+                if (Star1.isChecked()){
                     Star = "*";
-                } else if (!Star1.isChecked() && Star2.isChecked() && !Star3.isChecked() && !Star4.isChecked() && !Star5.isChecked()) {
+                } else if (Star2.isChecked()) {
                     Star = "**";
-                } else if (!Star1.isChecked() && !Star2.isChecked() && Star3.isChecked() && !Star4.isChecked() && !Star5.isChecked()) {
+                } else if (Star3.isChecked()) {
                     Star = "***";
-                } else if (!Star1.isChecked() && !Star2.isChecked() && !Star3.isChecked() && Star4.isChecked() && !Star5.isChecked()) {
+                } else if (Star4.isChecked()) {
                     Star = "****";
-                } else if (!Star1.isChecked() && !Star2.isChecked() && !Star3.isChecked() && Star4.isChecked() && !Star5.isChecked()){
-                    Star = "******";
+                } else if (Star5.isChecked()){
+                    Star = "*****";
                 }
 
                 // Insert a task
@@ -76,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
         btnShowList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

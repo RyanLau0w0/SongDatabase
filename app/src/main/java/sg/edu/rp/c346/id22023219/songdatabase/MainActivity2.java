@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class MainActivity2 extends AppCompatActivity {
 
     ListView lvSongList;
-    Button btnStarFilter;
-    ArrayList<Songs> =
+    Button btnStarFilter, btnReset, btnInsert;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +25,25 @@ public class MainActivity2 extends AppCompatActivity {
 
         lvSongList = findViewById(R.id.lvSongList);
         btnStarFilter = findViewById(R.id.btnStarFilter);
+        btnReset = findViewById(R.id.buttonReset);
+        btnInsert = findViewById(R.id.buttonInsert);
         // Create the DBHelper object, passing in the
         // activity's Context
         DBHelper db = new DBHelper(MainActivity2.this);
         // Insert a task
         ArrayList<Songs> data = db.getSongs();
-        ArrayAdapter adapter = new ArrayAdapter<>(MainActivity2.this, android.R.layout.simple_list_item_1, data);
+        CustomSongDB adapter = new CustomSongDB(this, R.layout.song_db_row, data);
         lvSongList.setAdapter(adapter);
+
         db.close();
 
         btnStarFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper dbh = new DBHelper(MainActivity2.this);
+
                 data.clear();
-                // al.addAll(dbh.getAllNotes());
                 String filterText = "*****";
-                data.addAll(dbh.getSongs(filterText));
+                data.addAll(db.getSongs(filterText));
                 adapter.notifyDataSetChanged();
             }
         });
@@ -56,6 +58,30 @@ public class MainActivity2 extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHelper dbh = new DBHelper(MainActivity2.this);
+                data.clear();
+                data.addAll(dbh.getSongs());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        btnInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity2.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        btnReset.performClick();
     }
 
 

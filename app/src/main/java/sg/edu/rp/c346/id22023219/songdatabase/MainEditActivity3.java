@@ -43,16 +43,16 @@ public class MainEditActivity3 extends AppCompatActivity {
 
         etEditTitle.setText(data.getTitle());
         etEditSinger.setText(data.getSinger());
-        etEditYear.setText(data.getYear());
-        if (data.getStars() == "*"){
+        etEditYear.setText(""+data.getYear());
+        if (data.getStars().equals("*")){
             EditStar1.setChecked(true);
-        } else if (data.getStars() == "**") {
+        } else if (data.getStars().equals("**")) {
             EditStar2.setChecked(true);
-        }else if (data.getStars() == "***") {
+        }else if (data.getStars().equals("***")) {
             EditStar3.setChecked(true);
-        }else if (data.getStars() == "****") {
+        }else if (data.getStars().equals("****")) {
             EditStar4.setChecked(true);
-        }else if (data.getStars() == "*****") {
+        }else if (data.getStars().equals("*****")) {
             EditStar5.setChecked(true);
         }
 
@@ -61,16 +61,16 @@ public class MainEditActivity3 extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper dbh = new DBHelper(MainEditActivity3.this);
                 String Star = "";
-                if (EditStar1.isChecked() && !EditStar2.isChecked() && !EditStar3.isChecked() && !EditStar4.isChecked() && !EditStar5.isChecked()){
+                if (EditStar1.isChecked()){
                     Star = "*";
-                } else if (!EditStar1.isChecked() && EditStar2.isChecked() && !EditStar3.isChecked() && !EditStar4.isChecked() && !EditStar5.isChecked()) {
+                } else if (EditStar2.isChecked()) {
                     Star = "**";
-                } else if (!EditStar1.isChecked() && !EditStar2.isChecked() && EditStar3.isChecked() && !EditStar4.isChecked() && !EditStar5.isChecked()) {
+                } else if (EditStar3.isChecked()) {
                     Star = "***";
-                } else if (!EditStar1.isChecked() && !EditStar2.isChecked() && !EditStar3.isChecked() && EditStar4.isChecked() && !EditStar5.isChecked()) {
+                } else if (EditStar4.isChecked()) {
                     Star = "****";
-                } else if (!EditStar1.isChecked() && !EditStar2.isChecked() && !EditStar3.isChecked() && EditStar4.isChecked() && !EditStar5.isChecked()){
-                    Star = "******";
+                } else if (EditStar5.isChecked()){
+                    Star = "*****";
                 }
                 data.setTitle(etEditTitle.getText().toString());
                 data.setSinger(etEditSinger.getText().toString());
@@ -99,4 +99,5 @@ public class MainEditActivity3 extends AppCompatActivity {
         });
 
     }
+
 }

@@ -22,8 +22,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SINGER = "singer";
     private static final String COLUMN_YEAR = "year";
     private static final String COLUMN_STARS = "stars";
-    private static final String COLUMN_NOTE_CONTENT = "note_content";
-    private static final String TABLE_NOTE = "note";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VER);
@@ -94,14 +92,13 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Songs> getSongs(String keyword) {
-        ArrayList<Songs> tasks = new ArrayList<Songs>();
+        ArrayList<Songs> song = new ArrayList<Songs>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID, COLUMN_NOTE_CONTENT};
-        String condition = COLUMN_NOTE_CONTENT + " Like ?";
+        String[] columns = {COLUMN_ID, COLUMN_TITLE, COLUMN_SINGER, COLUMN_YEAR, COLUMN_STARS};
+        String condition = COLUMN_STARS + " = ?";
         String[] args = {"%" + keyword + "%"};
-        Cursor cursor = db.query(TABLE_NOTE, columns, condition, args,
-                null, null, null, null);
+        Cursor cursor = db.query(TABLE_SONG, columns, condition, args, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -111,24 +108,24 @@ public class DBHelper extends SQLiteOpenHelper {
                 int year = cursor.getInt(3);
                 String stars = cursor.getString(4);
                 Songs obj = new Songs(id, title, singer, year, stars);
-                tasks.add(obj);
+                song.add(obj);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return tasks;
+        return song;
     }
 
     public int updateSong(Songs data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NOTE_CONTENT, data.getTitle());
-        values.put(COLUMN_NOTE_CONTENT, data.getSinger());
-        values.put(COLUMN_NOTE_CONTENT, data.getYear());
-        values.put(COLUMN_NOTE_CONTENT, data.getStars());
+        values.put(COLUMN_TITLE, data.getTitle());
+        values.put(COLUMN_SINGER, data.getSinger());
+        values.put(COLUMN_YEAR, data.getYear());
+        values.put(COLUMN_STARS, data.getStars());
         String condition = COLUMN_ID + "= ?";
         String[] args = {String.valueOf(data.getId())};
-        int result = db.update(TABLE_NOTE, values, condition, args);
+        int result = db.update(TABLE_SONG, values, condition, args);
         if (result < 1) {
             Log.d("DBHelper", "Update failed");
         }
@@ -141,7 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String condition = COLUMN_ID + "= ?";
         String[] args = {String.valueOf(id)};
-        int result = db.delete(TABLE_NOTE, condition, args);
+        int result = db.delete(TABLE_SONG, condition, args);
         if (result < 1){
             Log.d("DBHelper", "Delete failed");
         }

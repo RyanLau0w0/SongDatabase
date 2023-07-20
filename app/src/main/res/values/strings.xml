@@ -18,4 +18,6 @@
     <string name="edit">EDIT</string>
     <string name="delete">DELETE</string>
     <string name="cancel2">CANCEL</string>
+    <string name="reset">RESET</string>
+    <string name="insert_new_song">INSERT NEW SONG</string>
 </resources>

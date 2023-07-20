@@ -8,6 +8,19 @@
     tools:context=".MainActivity2">
 
     <Button
+        android:id="@+id/buttonInsert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/insert_new_song" />
+
+    <Button
+        android:id="@+id/buttonReset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:visibility="visible" />
+
+    <Button
         android:id="@+id/btnStarFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
